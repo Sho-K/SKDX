@@ -5,6 +5,8 @@
 #include "Vector.h"
 #include "Quaternion.h"
 
+using namespace SKDX::Math;
+
 const Matrix4x4 Matrix4x4::Identity = Matrix4x4( 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 );
 
 Matrix4x4::Matrix4x4( )

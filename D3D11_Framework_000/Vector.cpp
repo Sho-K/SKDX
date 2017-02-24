@@ -2,6 +2,8 @@
 #include "Vector.h"
 #include <math.h>
 
+using namespace SKDX::Math;
+
 /*
 	Vector3 
 */

@@ -3,6 +3,8 @@
 #include "Vector.h"
 #include <math.h>
 
+using namespace SKDX::Math;
+
 const Quaternion Quaternion::Identity = Quaternion( 0, 0, 0, 1 );
 
 Quaternion::Quaternion( ) : x( 0.0f ), y( 0.0f ), z( 0.0f ), w( 1.0f )
