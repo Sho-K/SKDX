@@ -48,5 +48,13 @@ namespace Graphics{
 		Description description;
 
 	};
+
+	interface IDrawable {
+		virtual void Draw( ) = 0;
+	};
+
+	class RenderObject {
+
+	};
 };
 };
