@@ -40,6 +40,16 @@ Transform::Transform( const Vector3& pos, const Quaternion& rot, const Vector3& 
 	matrix			= mtxScaling * mtxRotation * mtxTranslation;
 }
 
+Transform::~Transform( )
+{
+
+}
+
+void Transform::Update( )
+{
+	matrix = mtxScaling * mtxRotation * mtxTranslation;
+}
+
 void Transform::SetParent( const std::shared_ptr< Transform >& transform )
 {
 	if( !parent.expired() ){
@@ -52,21 +62,93 @@ void Transform::SetParent( const std::shared_ptr< Transform >& transform )
 void Transform::SetPosition( const Vector3& pos )
 {
 	position = pos;
+	mtxTranslation = Matrix4x4::CreateTranslation( position );
 }
 
 void Transform::SetPosition( float x, float y, float z )
 {
 	position = Vector3( x, y, z );
+	mtxTranslation = Matrix4x4::CreateTranslation( position );
 }
 
 void Transform::SetRotation( const Quaternion& rot )
 {
 	rotation = rot;
+	mtxRotation = Matrix4x4::CreateRotation( rotation );
 }
 
 void Transform::SetRotation( const Vector3& axis, float angle )
 {
 	rotation = Quaternion::CreateRotation( axis, angle );
+	mtxRotation = Matrix4x4::CreateRotation( rotation );
+}
+
+void Transform::SetRotation( const Vector3& eularAngles )
+{
+	rotation = Quaternion::CreateRotation( eularAngles.y, eularAngles.x, eularAngles.z );
+	mtxRotation = Matrix4x4::CreateRotation( rotation );
+}
+
+void Transform::SetRotation( float yaw, float pitch, float roll )
+{
+	rotation = Quaternion::CreateRotation( yaw, pitch, roll );
+	mtxRotation = Matrix4x4::CreateRotation( rotation );
+}
+
+void Transform::SetSize( const Vector3& size )
+{
+	this->size = size;
+	mtxScaling = Matrix4x4::CreateScaling( size );
+}
+
+void Transform::SetSize( float x, float y, float z )
+{
+	this->size = Vector3( x, y, z );
+	mtxScaling = Matrix4x4::CreateScaling( size );
+}
+
+void Transform::SetSize( float size )
+{
+	this->size = Vector3( size, size, size );
+	mtxScaling = Matrix4x4::CreateScaling( size );
 }
 
 
+void Transform::Translate( const Vector3& translation )
+{
+	position += translation;
+	mtxTranslation = Matrix4x4::CreateTranslation( position );
+}
+
+void Transform::Translate( float x, float y, float z )
+{
+	position += Vector3( x, y, z );
+	mtxTranslation = Matrix4x4::CreateTranslation( position );
+}
+
+void Transform::Rotate( const Quaternion& rot )
+{
+	rotation *= rot;
+	mtxRotation = Matrix4x4::CreateRotation( rotation );
+}
+
+void Transform::Rotate( const Vector3& axis, float angle )
+{
+	auto rot = Quaternion::CreateRotation( axis, angle );
+	rotation *= rot;
+	mtxRotation = Matrix4x4::CreateRotation( rotation );
+}
+
+void Transform::Rotate( const Vector3& eularAngles )
+{
+	auto rot = Quaternion::CreateRotation( eularAngles );
+	rotation *= rot;
+	mtxRotation = Matrix4x4::CreateRotation( rotation );
+}
+
+void Transform::Rotate( float yaw, float pitch, float roll )
+{
+	auto rot = Quaternion::CreateRotation( yaw, pitch, roll );
+	rotation *= rot;
+	mtxRotation = Matrix4x4::CreateRotation( rotation );
+}

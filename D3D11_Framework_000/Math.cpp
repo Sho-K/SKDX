@@ -1,6 +1,7 @@
 
 #include "Math.h"
 
+using namespace SKDX::Math;
 
 const float Math::Pi = 3.14159265f;
 const float Math::Deg2Rad = 0.005555f * Pi;

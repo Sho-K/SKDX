@@ -25,7 +25,7 @@ namespace SKDX{
 		void SetSize( float x, float y, float z );
 		void SetSize( float size );
 
-		void Translate( const Math::Vector3 translation );
+		void Translate( const Math::Vector3& translation );
 		void Translate( float x, float y, float z );
 
 		void Rotate( const Math::Quaternion& rotation );
