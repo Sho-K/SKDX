@@ -95,11 +95,3 @@ void Graphics::Present( )
 	swapChain->Present( 0, 0 );
 }
 
-
-#include "Transform.h"
-
-const std::shared_ptr< SKDX::Transform > RenderObject::GetTransform( ) const
-{
-	return transform;
-
-}

@@ -56,9 +56,10 @@ namespace Graphics{
 		virtual void Draw( ) = 0;
 	};
 
-	class RenderObject abstract {
+	class RenderObject abstract : IDrawable {
 	public:
 		const std::shared_ptr< SKDX::Transform > GetTransform( ) const; 
+		virtual void Draw( ) = 0;
 	protected:
 		std::shared_ptr< SKDX::Transform > transform;
 	private:
