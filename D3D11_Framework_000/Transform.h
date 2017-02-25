@@ -47,10 +47,13 @@ namespace SKDX{
 		Transform( );
 		Transform( const Math::Vector3& pos, const Math::Quaternion& rot, const Math::Vector3& size );
 		
+		void UpdateTranslationMatrix( );
+		void UpdateRotationMatrix( );
+		void UpdateScalingMatrix( );
 
-		Math::Vector3			position;
-		Math::Quaternion		rotation;
-		Math::Vector3			size;
+		Math::Vector3				position;
+		Math::Quaternion			rotation;
+		Math::Vector3				size;
 
 		Math::Matrix4x4			mtxTranslation;
 		Math::Matrix4x4			mtxRotation;

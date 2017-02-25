@@ -123,7 +123,7 @@ namespace SKDX {
 			float Length( ) const;
 			
 			void Normalize( );
-			Vector4 GetNormalize( ) const;
+			Vector4 GetNormalized( ) const;
 			
 			static float Length( const Vector4& v );
 			static Vector4 Normalize( const Vector4& v );

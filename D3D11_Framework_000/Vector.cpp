@@ -356,14 +356,14 @@ void Vector4::Normalize( )
 	*this /= Length( );
 }
 
-Vector4 Vector4::GetNormalize( ) const 
+Vector4 Vector4::GetNormalized( ) const 
 {
 	return *this / Length( );
 }
 
 Vector4 Vector4::Normalize( const Vector4& v ) 
 {
-	return v.GetNormalize( );
+	return v.GetNormalized( );
 }
 
 Vector4 Vector4::operator +( const Vector4& v ) const

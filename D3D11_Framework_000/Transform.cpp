@@ -55,10 +55,33 @@ void Transform::Update( )
 
 const Vector3& Transform::GetForward( ) const
 {
-	return matrix.TransformNormal( Vector3::Forward );
+	return forward;
 }
 
+const Vector3& Transform::GetBackward( ) const
+{
+	return -forward;
+}
 
+const Vector3& Transform::GetRight( ) const
+{
+	return right;
+}
+
+const Vector3& Transform::GetLeft( ) const
+{
+	return -right;
+}
+
+const Vector3& Transform::GetUpward( ) const
+{
+	return up;
+}
+
+const Vector3& Transform::GetDownward( ) const
+{
+	return -up;
+}
 
 void Transform::SetParent( const std::shared_ptr< Transform >& transform )
 {
@@ -69,96 +92,121 @@ void Transform::SetParent( const std::shared_ptr< Transform >& transform )
 	}
 }
 
+//	Translation
 void Transform::SetPosition( const Vector3& pos )
 {
 	position = pos;
-	mtxTranslation = Matrix4x4::CreateTranslation( position );
+	UpdateTranslationMatrix( );
 }
 
 void Transform::SetPosition( float x, float y, float z )
 {
 	position = Vector3( x, y, z );
-	mtxTranslation = Matrix4x4::CreateTranslation( position );
+	UpdateTranslationMatrix( );
 }
-
-void Transform::SetRotation( const Quaternion& rot )
-{
-	rotation = rot;
-	mtxRotation = Matrix4x4::CreateRotation( rotation );
-}
-
-void Transform::SetRotation( const Vector3& axis, float angle )
-{
-	rotation = Quaternion::CreateRotation( axis, angle );
-	mtxRotation = Matrix4x4::CreateRotation( rotation );
-}
-
-void Transform::SetRotation( const Vector3& eularAngles )
-{
-	rotation = Quaternion::CreateRotation( eularAngles.y, eularAngles.x, eularAngles.z );
-	mtxRotation = Matrix4x4::CreateRotation( rotation );
-}
-
-void Transform::SetRotation( float yaw, float pitch, float roll )
-{
-	rotation = Quaternion::CreateRotation( yaw, pitch, roll );
-	mtxRotation = Matrix4x4::CreateRotation( rotation );
-}
-
-void Transform::SetSize( const Vector3& size )
-{
-	this->size = size;
-	mtxScaling = Matrix4x4::CreateScaling( size );
-}
-
-void Transform::SetSize( float x, float y, float z )
-{
-	this->size = Vector3( x, y, z );
-	mtxScaling = Matrix4x4::CreateScaling( size );
-}
-
-void Transform::SetSize( float size )
-{
-	this->size = Vector3( size, size, size );
-	mtxScaling = Matrix4x4::CreateScaling( size );
-}
-
 
 void Transform::Translate( const Vector3& translation )
 {
 	position += translation;
-	mtxTranslation = Matrix4x4::CreateTranslation( position );
+	UpdateTranslationMatrix( );
 }
 
 void Transform::Translate( float x, float y, float z )
 {
 	position += Vector3( x, y, z );
-	mtxTranslation = Matrix4x4::CreateTranslation( position );
+	UpdateTranslationMatrix( );
+}
+
+
+
+//	Rotation
+void Transform::SetRotation( const Quaternion& rot )
+{
+	rotation = rot;
+	UpdateRotationMatrix( );
+}
+
+void Transform::SetRotation( const Vector3& axis, float angle )
+{
+	rotation = Quaternion::CreateRotation( axis, angle );
+	UpdateRotationMatrix( );
+}
+
+void Transform::SetRotation( const Vector3& eularAngles )
+{
+	rotation = Quaternion::CreateRotation( eularAngles.y, eularAngles.x, eularAngles.z );
+	UpdateRotationMatrix( );
+}
+
+void Transform::SetRotation( float yaw, float pitch, float roll )
+{
+	rotation = Quaternion::CreateRotation( yaw, pitch, roll );
+	UpdateRotationMatrix( );
 }
 
 void Transform::Rotate( const Quaternion& rot )
 {
 	rotation *= rot;
-	mtxRotation = Matrix4x4::CreateRotation( rotation );
+	UpdateRotationMatrix( );
 }
 
 void Transform::Rotate( const Vector3& axis, float angle )
 {
 	auto rot = Quaternion::CreateRotation( axis, angle );
 	rotation *= rot;
-	mtxRotation = Matrix4x4::CreateRotation( rotation );
+	UpdateRotationMatrix( );
 }
 
 void Transform::Rotate( const Vector3& eularAngles )
 {
 	auto rot = Quaternion::CreateRotation( eularAngles );
 	rotation *= rot;
-	mtxRotation = Matrix4x4::CreateRotation( rotation );
+	UpdateRotationMatrix( );
 }
 
 void Transform::Rotate( float yaw, float pitch, float roll )
 {
 	auto rot = Quaternion::CreateRotation( yaw, pitch, roll );
 	rotation *= rot;
+	UpdateRotationMatrix( );
+}
+
+//	Sclaing
+void Transform::SetSize( const Vector3& size )
+{
+	this->size = size;
+	UpdateScalingMatrix( );
+}
+
+void Transform::SetSize( float x, float y, float z )
+{
+	this->size = Vector3( x, y, z );
+	UpdateScalingMatrix( );
+}
+
+void Transform::SetSize( float size )
+{
+	this->size = Vector3( size, size, size );
+	UpdateScalingMatrix( );
+}
+
+
+
+void Transform::UpdateTranslationMatrix( )
+{
+	mtxTranslation = Matrix4x4::CreateTranslation( position );
+}
+
+void Transform::UpdateRotationMatrix( )
+{
 	mtxRotation = Matrix4x4::CreateRotation( rotation );
+
+	forward		= Vector3( mtxRotation._11, mtxRotation._21, mtxRotation._31 ).GetNormalized( );
+	right		= Vector3( mtxRotation._12, mtxRotation._22, mtxRotation._32 ).GetNormalized( );
+	up			= Vector3( mtxRotation._31, mtxRotation._32, mtxRotation._33 ).GetNormalized( );
+}
+
+void Transform::UpdateScalingMatrix( )
+{
+	mtxScaling = Matrix4x4::CreateScaling( size );
 }
