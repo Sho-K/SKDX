@@ -36,8 +36,13 @@ namespace Graphics{
 		bool Initialize( const std::weak_ptr< Framework::Window >& outputWindow  );
 		void Dispose( );
 
+		void SetVertexShader( const Microsoft::WRL::ComPtr< ID3D11VertexShader >& shader );
+
 		const std::weak_ptr< Framework::Window >& GetOutputWindow( ) const { return outputWindow; }
 		const Description& GetDescription( ) const { return description; }
+
+		Microsoft::WRL::ComPtr< ID3D11Device > GetDevice( ) const { return device; }
+		Microsoft::WRL::ComPtr< ID3D11DeviceContext > GetContext( ) const { return immediateContext; }
 	private:
 		Graphics( Graphics& ) = delete;
 		Graphics& operator =( Graphics& ) = delete;
