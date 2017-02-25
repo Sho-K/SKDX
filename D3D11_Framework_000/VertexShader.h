@@ -31,10 +31,9 @@ namespace SKDX{
 		};
 
 	public:
-		static std::shared_ptr< VertexShader > Create( const std::shared_ptr< Graphics::Graphics >& graphics, const wchar_t* filepath, const char* entryPoint="vs_main", const char* profile="vs_5_0" );
+		static std::shared_ptr< VertexShader > LoadFromFile( const std::shared_ptr< Graphics::Graphics >& graphics, const wchar_t* filepath, const char* entryPoint="vs_main", const char* profile="vs_5_0" );
 		virtual ~VertexShader( );
 		
-		virtual bool Initialize( const wchar_t* filepath, const char* entryPoint, const char* profile );
 		virtual void Dispose( );
 
 		virtual void Bind( );
@@ -42,6 +41,8 @@ namespace SKDX{
 
 	protected:
 		VertexShader( const std::shared_ptr< Graphics::Graphics >& graphics );
+		
+		virtual bool Initialize( const wchar_t* filepath, const char* entryPoint, const char* profile );
 
 		std::weak_ptr< Graphics::Graphics > graphics;
 

@@ -21,8 +21,6 @@ Application::Application( const char* appName )
 
 Application::~Application( )
 {
-	auto ps = SKDX::PixelShader::Create( graphics, L"res/shaders/shader.fx" );
-
 	window = nullptr;
 	graphics = nullptr;
 }

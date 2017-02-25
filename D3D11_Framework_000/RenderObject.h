@@ -19,8 +19,7 @@ namespace SKDX {
 
 			const std::shared_ptr< Transform >& GetTransform( ) const { return transform; }
 		protected:
-			RenderObject( const std::shared_ptr< Graphics >& graphics );
-			
+			RenderObject( const std::shared_ptr< Graphics >& graphics );			
 
 			std::weak_ptr< Graphics > graphics;
 			std::shared_ptr< Transform > transform;

@@ -9,7 +9,7 @@
 
 using namespace SKDX;
 
-std::shared_ptr< PixelShader > PixelShader::Create( const std::shared_ptr< Graphics::Graphics >& graphics, const wchar_t* filepath, const char* entryPoint, const char* profile )
+std::shared_ptr< PixelShader > PixelShader::LoadFromFile( const std::shared_ptr< Graphics::Graphics >& graphics, const wchar_t* filepath, const char* entryPoint, const char* profile )
 {
 	std::shared_ptr< PixelShader > ps( new PixelShader(graphics) );
 	ps->Initialize( filepath, entryPoint, profile );

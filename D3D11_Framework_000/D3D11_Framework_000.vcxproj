@@ -71,6 +71,7 @@
     <ClCompile Include="Framework.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Matrix.cpp" />
+    <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="Quaternion.cpp" />
     <ClCompile Include="RenderObject.cpp" />
     <ClCompile Include="Transform.cpp" />
@@ -84,6 +85,7 @@
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Matrix.h" />
+    <ClInclude Include="PixelShader.h" />
     <ClInclude Include="Quaternion.h" />
     <ClInclude Include="RenderObject.h" />
     <ClInclude Include="Shader.h" />

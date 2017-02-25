@@ -10,7 +10,7 @@
 
 using namespace SKDX;
 
-std::shared_ptr< VertexShader > VertexShader::Create( const std::shared_ptr< SKDX::Graphics::Graphics >& graphics, const wchar_t* filepath, const char* entryPoint, const char* profile )
+std::shared_ptr< VertexShader > VertexShader::LoadFromFile( const std::shared_ptr< SKDX::Graphics::Graphics >& graphics, const wchar_t* filepath, const char* entryPoint, const char* profile )
 {
 	std::shared_ptr< VertexShader > vs( new VertexShader(graphics) );
 	vs->Initialize( filepath, entryPoint, profile );
