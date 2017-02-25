@@ -58,7 +58,7 @@ namespace Graphics{
 
 	class RenderObject abstract {
 	public:
-		const std::shared_ptr< SKDX::Transform > GetTransform( ); 
+		const std::shared_ptr< SKDX::Transform > GetTransform( ) const; 
 	protected:
 		std::shared_ptr< SKDX::Transform > transform;
 	private:

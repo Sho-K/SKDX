@@ -8,7 +8,7 @@
 namespace SKDX {
 	namespace Math {
 		const float Pi			= 3.14159265f;
-		const float Deg2Rad	= 0.005555f * Pi;
-		const float Rad2Deg	= 180.0f / Pi;
+		const float Deg2Rad		= 0.005555f * Pi;
+		const float Rad2Deg		= 180.0f / Pi;
 	};
 };

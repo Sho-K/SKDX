@@ -98,7 +98,7 @@ void Graphics::Present( )
 
 #include "Transform.h"
 
-std::shared_ptr< SKDX::Transform > RenderObject::GetTransform( )
+const std::shared_ptr< SKDX::Transform > RenderObject::GetTransform( ) const
 {
 	return transform;
 
