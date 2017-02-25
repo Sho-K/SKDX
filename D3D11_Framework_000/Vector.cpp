@@ -32,11 +32,6 @@ Vector3::Vector3( const Vector2& v ) : x( v.x ), y( v.y ), z( 0.0f )
 }
 
 
-/*
-Vector3::Vector3( cosnt Vector2& v, float z )
-Vectpr3::Vector3( const Vector4& v )
-*/
-
 /*	 Member functions	*/
 float Vector3::Length( ) const
 {

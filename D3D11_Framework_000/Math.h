@@ -7,13 +7,8 @@
 
 namespace SKDX {
 	namespace Math {
-
-		class Math{
-		public:
-			static const float Pi;
-			static const float Deg2Rad;
-			static const float Rad2Deg;
-		};
-
+		const float Pi			= 3.14159265f;
+		const float Deg2Rad	= 0.005555f * Pi;
+		const float Rad2Deg	= 180.0f / Pi;
 	};
 };

@@ -7,6 +7,9 @@
 
 
 namespace SKDX{
+
+	class Transform;
+
 	namespace Framework{
 		class Window;
 	};
@@ -53,8 +56,12 @@ namespace Graphics{
 		virtual void Draw( ) = 0;
 	};
 
-	class RenderObject {
-
+	class RenderObject abstract {
+	public:
+		const std::shared_ptr< SKDX::Transform > GetTransform( ); 
+	protected:
+		std::shared_ptr< SKDX::Transform > transform;
+	private:
 	};
 };
 };
