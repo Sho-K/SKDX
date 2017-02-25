@@ -60,6 +60,17 @@ Matrix4x4 Matrix4x4::operator *( const Matrix4x4& mtx ) const
 	return out;
 }
 
+//Vector3 Matrix4x4::operator *( const Vector3& v ) const
+//{
+//	auto x = _11 * v.x + _21 * v.y + _31 * v.z + _41 * v.w;
+//}
+
+
+Vector3 Matrix4x4::TransformCoord( const Vector3& v ) const
+{
+	return Vector3::Zero;
+}
+
 
 /*		Translation		*/
 void Matrix4x4::Translate( const Vector3& translation )
@@ -347,3 +358,5 @@ Matrix4x4 Matrix4x4::CreatePersectiveFov( float fov, float aspect, float nearCli
 					  0.0f,	0.0f,   sz, 1.0f,
 					  0.0f, 0.0f,  szn, 0.0f );
 }
+
+

@@ -22,6 +22,10 @@ Transform::Transform( )
 	rotation	= Quaternion::Identity;
 	size		= Vector3( 1, 1, 1 );
 
+	forward		= Vector3::Forward;
+	right		= Vector3::Right;
+	up			= Vector3::Up;
+
 	mtxTranslation	= Matrix4x4::CreateTranslation( position );
 	mtxRotation		= Matrix4x4::CreateRotation( rotation );
 	mtxScaling		= Matrix4x4::CreateScaling( size );
@@ -42,13 +46,19 @@ Transform::Transform( const Vector3& pos, const Quaternion& rot, const Vector3& 
 
 Transform::~Transform( )
 {
-
 }
 
 void Transform::Update( )
 {
 	matrix = mtxScaling * mtxRotation * mtxTranslation;
 }
+
+const Vector3& Transform::GetForward( ) const
+{
+	return matrix.TransformNormal( Vector3::Forward );
+}
+
+
 
 void Transform::SetParent( const std::shared_ptr< Transform >& transform )
 {

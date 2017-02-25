@@ -33,9 +33,16 @@ namespace SKDX{
 		void Rotate( const Math::Vector3& eularAngles );
 		void Rotate( float yaw, float pitch, float roll );
 
-		const Math::Vector3&	GetPosition( )	const { return position; }
-		const Math::Quaternion&	GetRotaiton( )	const { return rotation; }
-		const Math::Matrix4x4&	GetMatrix( )	const { return matrix; }
+		const Math::Vector3&			GetPosition( )	const { return position; }
+		const Math::Quaternion&		GetRotaiton( )	const { return rotation; }
+		const Math::Matrix4x4&			GetMatrix( )	const { return matrix; }
+
+		const Math::Vector3&			GetForward( )	const;
+		const Math::Vector3&			GetBackward( )	const;
+		const Math::Vector3&			GetRight( )		const;
+		const Math::Vector3&			GetLeft( )		const;
+		const Math::Vector3&			GetUpward( )	const;
+		const Math::Vector3&			GetDownward( )	const;
 	private:
 		Transform( );
 		Transform( const Math::Vector3& pos, const Math::Quaternion& rot, const Math::Vector3& size );
@@ -50,6 +57,10 @@ namespace SKDX{
 		Math::Matrix4x4			mtxScaling;
 
 		Math::Matrix4x4			matrix;
+
+		Math::Vector3				forward;
+		Math::Vector3				right;
+		Math::Vector3				up;
 
 		std::weak_ptr< Transform > parent;
 	};

@@ -56,6 +56,11 @@ namespace SKDX {
 			Vector3& operator *=( float f );
 			Vector3& operator /=( float f );
 
+			Vector3 operator -( ) const;
+
+			bool operator ==( const Vector3& v ) const;
+			bool operator !=( const Vector3& v ) const;
+
 			operator float*( ) { return &x; }
 		};
 
@@ -100,8 +105,47 @@ namespace SKDX {
 			Vector2& operator *=( float f );
 			Vector2& operator /=( float f );
 
+			bool operator ==( const Vector2& v ) const;
+			bool operator !=( const Vector2& v ) const;
+
+			Vector2 operator -( ) const;
 			operator float*( ) { return &x; }
 		};
 
+		class Vector4 {
+		public:
+			float x, y, z, w;
+
+			Vector4( float x = 0.0f, float y = 0.0f, float z = 0.0f, float w = 0.0f );
+			Vector4( const Vector2& v3, float z = 0.0f, float w = 0.0f );
+			Vector4( const Vector3& v3, float w = 0.0f );
+
+			float Length( ) const;
+			
+			void Normalize( );
+			Vector4 GetNormalize( ) const;
+			
+			static float Length( const Vector4& v );
+			static Vector4 Normalize( const Vector4& v );
+
+			/*		operator overload		*/
+			Vector4 operator +( const Vector4& v ) const;
+			Vector4 operator -( const Vector4& v ) const;
+			Vector4 operator *( float f ) const;
+			Vector4 operator /( float f ) const;
+			
+			Vector4& operator +=( const Vector4& v );
+			Vector4& operator -=( const Vector4& v );
+			Vector4& operator *=( float f );
+			Vector4& operator /=( float f );
+			
+			bool operator ==( const Vector4& v ) const;
+			bool operator !=( const Vector4& v ) const;
+
+			Vector4 operator -( ) const;
+			operator float*( ) { return &x; }
+
+		private:
+		};
 	};
 };

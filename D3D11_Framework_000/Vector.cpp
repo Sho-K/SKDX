@@ -161,6 +161,22 @@ Vector3& Vector3::operator /=( float f )
 	return *this;
 }
 
+bool Vector3::operator ==( const Vector3& v ) const
+{
+	return ( x == v.x ) && ( y == v.y ) && ( z == v.z );
+}
+
+bool Vector3::operator !=( const Vector3& v ) const
+{
+	return !( *this == v );
+}
+
+Vector3 Vector3::operator -( ) const
+{
+	return Vector3( -x, -y, -z );
+}
+
+
 /*
 	Vector2
 */
@@ -294,4 +310,131 @@ Vector2& Vector2::operator /=( float f )
 	x *= inv;
 	y *= inv;
 	return *this;
+}
+
+bool Vector2::operator ==( const Vector2& v ) const
+{
+	return ( x == v.x ) && ( y == v.y );
+}
+
+bool Vector2::operator !=( const Vector2& v ) const
+{
+	return !( *this == v );
+}
+
+Vector2 Vector2::operator -( ) const
+{
+	return Vector2( -x, -y );
+}
+
+
+/*		Vector4			*/
+Vector4::Vector4( float x, float y, float z, float w )	: x( x ), y( y ), z( z ), w( w )
+{
+}
+
+Vector4::Vector4( const Vector3& v, float w ) : x( v.x ), y( v.y ), z( v.z ), w( w )
+{
+}
+
+Vector4::Vector4( const Vector2& v, float z, float w ) : x( v.x ), y( v.y ), z( z ), w( w )
+{
+}
+
+float Vector4::Length( ) const 
+{
+	return sqrtf( (x*x) + (y*y) + (z*z) + (w*w) );
+}
+
+float Vector4::Length( const Vector4& v )
+{
+	return v.Length( );
+}
+
+void Vector4::Normalize( )
+{
+	*this /= Length( );
+}
+
+Vector4 Vector4::GetNormalize( ) const 
+{
+	return *this / Length( );
+}
+
+Vector4 Vector4::Normalize( const Vector4& v ) 
+{
+	return v.GetNormalize( );
+}
+
+Vector4 Vector4::operator +( const Vector4& v ) const
+{
+	return Vector4( x+v.x, y+v.y, z+v.z, w+v.w );
+}
+
+Vector4 Vector4::operator -( const Vector4& v ) const
+{
+	return Vector4( x-v.x, y-v.y, z-v.z, w-v.w );
+}
+
+Vector4 Vector4::operator *( float f ) const 
+{
+	return Vector4( x*f, y*f, z*f, w*f );
+}
+
+Vector4 Vector4::operator/( float f ) const 
+{
+	auto inv = 1.0f / f;
+	return *this * inv;
+}
+
+Vector4& Vector4::operator +=( const Vector4& v )
+{
+	x += v.x;
+	y += v.y;
+	z += v.z;
+	w += v.w;
+	return *this;
+}
+
+Vector4& Vector4::operator -=( const Vector4& v ) 
+{
+	x -= v.x;
+	y -= v.y;
+	z -= v.z;
+	w -= v.w;
+	return *this;
+}
+
+Vector4& Vector4::operator *=( float f ) 
+{
+	x *= f;
+	y *= f;
+	z *= f;
+	w *= f;
+	return *this;
+}
+
+Vector4& Vector4::operator /=( float f )
+{
+	auto inv = 1.0f / f;
+	x *= inv;
+	y *= inv;
+	z *= inv;
+	w *= inv;
+	return *this;
+}
+
+Vector4 Vector4::operator -( ) const
+{
+	return Vector4( -x, -y, -z, -w );
+}
+
+bool Vector4::operator ==( const Vector4& v ) const
+{
+	return ( x == v.x ) && ( y == v.y ) && ( z == v.z ) && ( w == v.w );
+}
+
+bool Vector4::operator !=( const Vector4& v ) const
+{
+	return !( *this == v );
 }

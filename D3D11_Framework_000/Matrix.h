@@ -5,6 +5,7 @@ namespace SKDX {
 	namespace Math {
 
 		class Vector3;
+		class Vector4;
 		class Quaternion;
 
 		class Matrix4x4 {
@@ -53,8 +54,8 @@ namespace SKDX {
 
 			void Multiply( const Matrix4x4& mtx );
 
-			Vector3 TransformCoord( const Vector3& v );
-			Vector3 TransformNormal( const Vector3& v );
+			Vector3 TransformCoord( const Vector3& v )	const;
+			Vector3 TransformNormal( const Vector3& v )	const;
 
 			/*		Static functions 	*/
 			static Matrix4x4 CreateTranslation( const Vector3& translation );
@@ -80,6 +81,7 @@ namespace SKDX {
 
 			/*		Operators		*/
 			Matrix4x4 operator *( const Matrix4x4& ) const;
+			Vector3 operator *( const Vector3& ) const;
 		};
 
 	};
