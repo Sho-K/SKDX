@@ -3,7 +3,11 @@
 #include "Framework.h"
 #include "Graphics.h"
 
+#include "VertexShader.h"
 #include "PixelShader.h"
+#include "Cube.h"
+#include "Transform.h"
+
 
 using namespace SKDX::Framework;
 
@@ -17,12 +21,19 @@ Application::Application( const char* appName )
 {
 	window.reset( new SKDX::Framework::Window( appName, 800, 600) );
 	graphics = std::make_shared< SKDX::Graphics::Graphics >( std::weak_ptr<SKDX::Framework::Window>(window) );
+
+	vertexShader	= SKDX::VertexShader::LoadFromFile( graphics, L"res/shaders/shader.fx" );
+	pixelShader		= SKDX::PixelShader::LoadFromFile( graphics, L"res/shaders/shader.fx" );
+	cube			= SKDX::Graphics::Geometries::Cube::Create( graphics, SKDX::Math::Vector3(1, 1, 1) );
 }
 
 Application::~Application( )
 {
-	window = nullptr;
-	graphics = nullptr;
+	vertexShader	= nullptr;
+	pixelShader		= nullptr;
+	cube			= nullptr;
+	window			= nullptr;
+	graphics		= nullptr;
 }
 
 int Application::Run( ){
@@ -32,5 +43,26 @@ int Application::Run( ){
 void Application::Draw( )
 {
 	graphics->Clear( 0.5f, 0.5f, 1.0f, 1.0f );
+
+
+	SKDX::Math::Matrix4x4 view = SKDX::Math::Matrix4x4::Identity;
+	SKDX::Math::Matrix4x4 proj = SKDX::Math::Matrix4x4::Identity;
+	{
+		auto eye	= SKDX::Math::Vector3( 0, 0, -10 );
+		auto look	= SKDX::Math::Vector3::Zero;
+		view		= SKDX::Math::Matrix4x4::CreateLookAt( eye, look, SKDX::Math::Vector3::Up );
+		proj		= SKDX::Math::Matrix4x4::CreatePersectiveFov( 0.45f*SKDX::Math::Pi, 1.33333f, 1.0f, 1000.0f );
+	}
+
+	auto transform = cube->GetTransform( );
+	transform->Update( );
+	SKDX::VertexShader::Matrices matrices = { transform->GetMatrix(), view, proj };
+	vertexShader->SetMatrices( matrices );
+	
+	vertexShader->Bind( );
+	pixelShader->Bind( );
+
+	cube->Draw( );
+
 	graphics->Present( );
 }

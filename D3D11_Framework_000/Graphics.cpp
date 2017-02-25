@@ -35,12 +35,13 @@ bool Graphics::Initialize( const std::weak_ptr< SKDX::Framework::Window >& outpu
 #endif
 
 	auto window = outputWindow.lock( );
-
+	int width	= window->GetClientWidth( );
+	int height	= window->GetClientHeight( );
 	DXGI_SWAP_CHAIN_DESC sd;
 	ZeroMemory( &sd, sizeof(sd) );
 	sd.BufferCount							= 1;
-	sd.BufferDesc.Width						= window->GetClientWidth( );
-	sd.BufferDesc.Height					= window->GetClientHeight( );
+	sd.BufferDesc.Width						= width;
+	sd.BufferDesc.Height					= height;
 	sd.BufferDesc.Format					= DXGI_FORMAT_R8G8B8A8_UNORM;
 	sd.BufferDesc.RefreshRate.Numerator		= 60;
 	sd.BufferDesc.RefreshRate.Denominator	= 1;
@@ -65,15 +66,57 @@ bool Graphics::Initialize( const std::weak_ptr< SKDX::Framework::Window >& outpu
 	swapChain->GetBuffer( 0, __uuidof(ID3D11Texture2D), (void**)&resource );
 	hr = device->CreateRenderTargetView( resource.Get(), nullptr, &backBuffer );
 	if( FAILED(hr) ) return false;
-	immediateContext->OMSetRenderTargets( 1, backBuffer.GetAddressOf(), nullptr );
+
+	if( !CreateDepthStencilView(width, height) ) return false;
+
+	immediateContext->OMSetRenderTargets( 1, backBuffer.GetAddressOf(), depthStencilView.Get() );
+
+	D3D11_VIEWPORT vp;
+	vp.Width		= (float)window->GetClientWidth( );
+	vp.Height		= (float)window->GetClientHeight( );
+	vp.TopLeftX		= 0.0f;
+	vp.TopLeftY		= 0.0f;
+	vp.MinDepth		= 0.0f;
+	vp.MaxDepth		= 1.0f;
+	immediateContext->RSSetViewports( 1, &vp );
 
 	return true;
 }
 
+
+bool Graphics::CreateDepthStencilView( int width, int height )
+{
+	D3D11_TEXTURE2D_DESC td;
+	ZeroMemory( &td, sizeof(td) );
+	td.Width                = width;
+	td.Height               = height;
+	td.MipLevels            = 1;
+	td.ArraySize            = 1;
+	td.Format               = DXGI_FORMAT_D16_UNORM;
+	td.SampleDesc.Count     = 1;
+	td.SampleDesc.Quality   = 0;
+	td.Usage                = D3D11_USAGE_DEFAULT;
+	td.BindFlags            = D3D11_BIND_DEPTH_STENCIL;
+
+	Microsoft::WRL::ComPtr< ID3D11Texture2D > dsTex = nullptr;
+	device->CreateTexture2D( &td, nullptr, &dsTex );
+
+	D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc;
+	ZeroMemory( &dsvDesc, sizeof(dsvDesc) );
+	dsvDesc.Format				= DXGI_FORMAT_D16_UNORM;
+	dsvDesc.ViewDimension		= D3D11_DSV_DIMENSION_TEXTURE2D;
+	dsvDesc.Texture2D.MipSlice	= 0;
+	auto hr = device->CreateDepthStencilView( dsTex.Get(), &dsvDesc, &depthStencilView );
+
+	return SUCCEEDED( hr );
+}
+
+
 void Graphics::Dispose( )
 {
 	backBuffer			= nullptr;
-		
+	depthStencilView	= nullptr;
+
 	device				= nullptr;
 	immediateContext	= nullptr;
 	swapChain			= nullptr;

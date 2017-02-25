@@ -48,26 +48,16 @@ namespace Graphics{
 		Graphics& operator =( Graphics& ) = delete;
 		std::weak_ptr< Framework::Window > outputWindow;
 
+		bool CreateDepthStencilView( int width, int height );
+
 		Microsoft::WRL::ComPtr< ID3D11Device >				device;
 		Microsoft::WRL::ComPtr< ID3D11DeviceContext >		immediateContext;
 		Microsoft::WRL::ComPtr< IDXGISwapChain >				swapChain;
 		Microsoft::WRL::ComPtr< ID3D11RenderTargetView>		backBuffer;
+		Microsoft::WRL::ComPtr< ID3D11DepthStencilView >	depthStencilView;
 
 		Description description;
 
-	};
-
-	interface IDrawable {
-		virtual void Draw( ) = 0;
-	};
-
-	class RenderObject abstract : IDrawable {
-	public:
-		const std::shared_ptr< SKDX::Transform > GetTransform( ) const; 
-		virtual void Draw( ) = 0;
-	protected:
-		std::shared_ptr< SKDX::Transform > transform;
-	private:
 	};
 };
 };

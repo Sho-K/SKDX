@@ -2,10 +2,9 @@
 #pragma once
 
 #include <memory>
+#include "Transform.h"
 
 namespace SKDX {
-	class Transform;
-
 	namespace Graphics {
 
 		class Graphics;
@@ -17,7 +16,7 @@ namespace SKDX {
 
 			virtual void Dispose( ) {}
 
-			const std::shared_ptr< Transform >& GetTransform( ) const { return transform; }
+			std::shared_ptr< Transform > GetTransform( ) const { return transform; }
 		protected:
 			RenderObject( const std::shared_ptr< Graphics >& graphics );			
 
