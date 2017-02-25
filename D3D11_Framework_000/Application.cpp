@@ -3,6 +3,8 @@
 #include "Framework.h"
 #include "Graphics.h"
 
+#include "PixelShader.h"
+
 using namespace SKDX::Framework;
 
 std::shared_ptr< Application > Application::Create( const char* appName )
@@ -19,6 +21,8 @@ Application::Application( const char* appName )
 
 Application::~Application( )
 {
+	auto ps = SKDX::PixelShader::Create( graphics, L"res/shaders/shader.fx" );
+
 	window = nullptr;
 	graphics = nullptr;
 }
