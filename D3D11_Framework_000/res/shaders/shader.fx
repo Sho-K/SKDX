@@ -10,7 +10,7 @@ cbuffer Matrices : register( b0 ) {
 	matrix proj;
 };
 
-VS_OUT vs_main( float4 position : POSITION, float3 normal : NORMAL )
+VS_OUT vs_main( float4 position : POSITION, float3 normal : NORMAL, float2 texCoord : TEXCOORD0 )
 {
 	VS_OUT output = (VS_OUT)0;
 	output.position = position;

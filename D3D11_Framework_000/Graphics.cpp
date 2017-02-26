@@ -72,8 +72,8 @@ bool Graphics::Initialize( const std::weak_ptr< SKDX::Framework::Window >& outpu
 	immediateContext->OMSetRenderTargets( 1, backBuffer.GetAddressOf(), depthStencilView.Get() );
 
 	D3D11_VIEWPORT vp;
-	vp.Width		= (float)window->GetClientWidth( );
-	vp.Height		= (float)window->GetClientHeight( );
+	vp.Width		= (float)width;
+	vp.Height		= (float)height;
 	vp.TopLeftX		= 0.0f;
 	vp.TopLeftY		= 0.0f;
 	vp.MinDepth		= 0.0f;
@@ -125,12 +125,14 @@ void Graphics::Dispose( )
 void Graphics::Clear( float clearColor[4] )
 {
 	immediateContext->ClearRenderTargetView( backBuffer.Get(), clearColor );
+	immediateContext->ClearDepthStencilView( depthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0 );
 }
 
 void Graphics::Clear( float r, float g, float b, float a )
 {
 	float clearColor[] = { r, g, b, a };
 	immediateContext->ClearRenderTargetView( backBuffer.Get(), clearColor );
+	immediateContext->ClearDepthStencilView( depthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0 );
 }
 
 void Graphics::Present( )

@@ -75,7 +75,6 @@ void VertexShader::Dispose( )
 
 void VertexShader::Bind( )
 {
-	auto g = graphics.lock( );
 	auto immediateContext = graphics.lock( )->GetContext( );
 
 	immediateContext->VSSetShader( shader.Get(), nullptr, 0 );

@@ -26,6 +26,7 @@ Cube::~Cube( )
 bool Cube::Initialize( const Vector3& size )
 {
 	Dispose( );
+
 	this->size = size;
 	InitPositions( );
 	InitNormals( );
@@ -67,7 +68,7 @@ void Cube::Draw( )
 {
 	auto immediateContext = graphics.lock( )->GetContext( );
 	UINT offset = 0, stride = sizeof( SKDX::VertexShader::Vertex );
-	immediateContext->IASetVertexBuffers( 0, 1, &vertexBuffer, &stride, &offset );
+	immediateContext->IASetVertexBuffers( 0, 1, vertexBuffer.GetAddressOf(), &stride, &offset );
 	immediateContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP );
 	immediateContext->Draw( 28, 0 );
 }

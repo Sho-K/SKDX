@@ -24,7 +24,7 @@ Application::Application( const char* appName )
 
 	vertexShader	= SKDX::VertexShader::LoadFromFile( graphics, L"res/shaders/shader.fx" );
 	pixelShader		= SKDX::PixelShader::LoadFromFile( graphics, L"res/shaders/shader.fx" );
-	cube			= SKDX::Graphics::Geometries::Cube::Create( graphics, SKDX::Math::Vector3(1, 1, 1) );
+	cube			= SKDX::Graphics::Geometries::Cube::Create( graphics, SKDX::Math::Vector3(5, 5, 5) );
 }
 
 Application::~Application( )
@@ -44,17 +44,17 @@ void Application::Draw( )
 {
 	graphics->Clear( 0.5f, 0.5f, 1.0f, 1.0f );
 
-
 	SKDX::Math::Matrix4x4 view = SKDX::Math::Matrix4x4::Identity;
 	SKDX::Math::Matrix4x4 proj = SKDX::Math::Matrix4x4::Identity;
 	{
-		auto eye	= SKDX::Math::Vector3( 0, 0, -10 );
+		auto eye	= SKDX::Math::Vector3::Backward * 10;
 		auto look	= SKDX::Math::Vector3::Zero;
 		view		= SKDX::Math::Matrix4x4::CreateLookAt( eye, look, SKDX::Math::Vector3::Up );
-		proj		= SKDX::Math::Matrix4x4::CreatePersectiveFov( 0.45f*SKDX::Math::Pi, 1.33333f, 1.0f, 1000.0f );
+		proj		= SKDX::Math::Matrix4x4::CreatePersectiveFov( 70.0f*SKDX::Math::Deg2Rad, 1.33333f, 1.0f, 1000.0f );
 	}
 
 	auto transform = cube->GetTransform( );
+	transform->Rotate( SKDX::Math::Vector3::Up, 0.0001f * SKDX::Math::Pi );
 	transform->Update( );
 	SKDX::VertexShader::Matrices matrices = { transform->GetMatrix(), view, proj };
 	vertexShader->SetMatrices( matrices );
