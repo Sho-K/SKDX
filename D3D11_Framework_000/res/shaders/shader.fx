@@ -1,6 +1,7 @@
 
 struct VS_OUT {
 	float4 position : SV_Position;
+	float4 color	: COLOR0;
 	float2 texCoord : TEXCOORD0;
 };
 
@@ -18,6 +19,10 @@ VS_OUT vs_main( float4 position : POSITION, float3 normal : NORMAL, float2 texCo
 	output.position = mul( output.position, view );
 	output.position = mul( output.position, proj );
 
+	float3 lightDir = normalize( float3(0.5f, -0.5f, 1.0f) );
+	float3 N = mul( float4(normal,0.0f), world ).xyz;
+	output.color	= max( 0.0f, dot(N, -lightDir) );
+
 	output.texCoord = 0;
 
 	return output;
@@ -25,5 +30,5 @@ VS_OUT vs_main( float4 position : POSITION, float3 normal : NORMAL, float2 texCo
 
 float4 ps_main( VS_OUT input ) : SV_Target
 {
-	return 1.0f;
+	return input.color;
 }

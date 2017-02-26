@@ -54,7 +54,9 @@ void Application::Draw( )
 	}
 
 	auto transform = cube->GetTransform( );
-	transform->Rotate( SKDX::Math::Vector3::Up, 0.0001f * SKDX::Math::Pi );
+	auto axis = SKDX::Math::Vector3::Up + SKDX::Math::Vector3::Right;
+	axis.Normalize( );
+	transform->Rotate( axis, 0.0001f * SKDX::Math::Pi );
 	transform->Update( );
 	SKDX::VertexShader::Matrices matrices = { transform->GetMatrix(), view, proj };
 	vertexShader->SetMatrices( matrices );

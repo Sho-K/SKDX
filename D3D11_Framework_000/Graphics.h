@@ -55,6 +55,7 @@ namespace Graphics{
 		Microsoft::WRL::ComPtr< IDXGISwapChain >				swapChain;
 		Microsoft::WRL::ComPtr< ID3D11RenderTargetView>		backBuffer;
 		Microsoft::WRL::ComPtr< ID3D11DepthStencilView >	depthStencilView;
+		Microsoft::WRL::ComPtr< ID3D11RasterizerState >		rasterizerState;
 
 		Description description;
 

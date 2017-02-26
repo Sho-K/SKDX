@@ -108,6 +108,18 @@ bool Graphics::CreateDepthStencilView( int width, int height )
 	dsvDesc.Texture2D.MipSlice	= 0;
 	auto hr = device->CreateDepthStencilView( dsTex.Get(), &dsvDesc, &depthStencilView );
 
+	//D3D11_RASTERIZER_DESC rd;
+	//Microsoft::WRL::ComPtr< ID3D11RasterizerState > rs;
+	//
+	//ZeroMemory( &rd, sizeof(rd) );
+	////rd.FillMode				= D3D11_FILL_WIREFRAME;
+	//rd.FillMode				= D3D11_FILL_SOLID;
+	//rd.CullMode				= D3D11_CULL_BACK;
+	//rd.DepthClipEnable		= true;
+
+	//hr = device->CreateRasterizerState( &rd, &rasterizerState );
+	//immediateContext->RSSetState( rasterizerState.Get() );
+
 	return SUCCEEDED( hr );
 }
 
